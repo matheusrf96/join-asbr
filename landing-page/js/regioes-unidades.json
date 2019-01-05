@@ -1,0 +1,39 @@
+[
+    {
+        "sigla": "S",
+        "nome": "Sul",
+        "cidades": [
+            "Curitiba",
+            "Porto Alegre"
+        ]
+    },
+    {
+        "sigla": "SE",
+        "nome": "Sudeste",
+        "cidades": [
+            "Belo Horizonte",
+            "Rio de Janeiro",
+            "São Paulo"
+        ]
+    },
+    {
+        "sigla": "CE",
+        "nome": "Centro-Oeste",
+        "cidades": [
+            "Brasília"
+        ]
+    },
+    {
+        "sigla": "NE",
+        "nome": "Nordeste",
+        "cidades": [
+            "Salvador",
+            "Recife"
+        ]
+    },
+    {
+        "sigla": "N",
+        "nome": "Norte",
+        "cidades": []
+    }
+]
