@@ -12,7 +12,7 @@
         <div class="container">
             <div class="row" style="margin:30px 0">
                 <div class="col-lg-3">
-                    <img src="img/logo.png" class="img-thumbnail">
+                    <img src="view/assets/img/logo.png" class="img-thumbnail">
                 </div>
                 <div class="col-lg-9">
                     <h3>Nome do Produto</h3>
@@ -21,7 +21,6 @@
 
             <div class="row">
                 <div class="col-lg-6" id="form-container">
-
                     <form id="step_1" onSubmit="return validarNome()" class="form-step">
                         <div class="panel panel-info">
                             <div class="panel-heading">
@@ -63,7 +62,12 @@
                         </div>
                     </form>
 
-                    <form id="step_2" class="form-step" style="display:none">
+                    <form method="POST" action="controller/processar-dados.php" id="step_2" class="form-step" style="display:none">
+                        <input type="hidden" id="nome2" name="nome" />
+                        <input type="hidden" id="data_nasc2" name="data_nascimento" />
+                        <input type="hidden" id="email2" name="email" />
+                        <input type="hidden" id="telefone2" name="telefone" />
+
                         <div class="panel panel-info">
                             <div class="panel-heading">
                                 <div class="panel-title">
@@ -113,14 +117,18 @@
         </div>
 
         <script src="http://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/master/dist/jquery.mask.js"></script>
-        <script src="js/validacao.js"></script>
-        <script src="js/regioes-unidades.js"></script>
+        <script src="view/assets/js/main.js"></script>
+        <script src="view/assets/js/regioes-unidades.js"></script>
         <script>
             $(function () {
                 $('.next-step').click(function (event) {
                     if(validarNome()){
-                        event.preventDefault();
-                        $(this).parents('.form-step').hide().next().show();
+                        if($(this).parents('.form-step').attr('id') != 'step_2'){
+                            atribuirValoresForm();
+
+                            event.preventDefault();
+                            $(this).parents('.form-step').hide().next().show();
+                        }
                     }
                     else{
                         alert('Por favor, insira seu nome completo.');
