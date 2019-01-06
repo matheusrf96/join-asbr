@@ -2,18 +2,20 @@
 
 require_once "../db/db.php";
 
-$db = new DB();
-
 class Lead{
+    private $db;
+
     private $nome;
+    private $dataNascimento;
     private $email;
     private $telefone;
     private $regiao;
     private $unidade;
-    private $dataNascimento;
     private $score = 10;
 
-    public function __construct($nome, $email, $telefone, $regiao, $unidade, $dataNascimento){
+    public function __construct($nome, $dataNascimento, $email, $telefone, $regiao, $unidade){
+        $this->db = new DB();
+
         if(strlen($nome) > 0 && strlen($nome) < 255){
             $this->nome = $nome;
         }
@@ -169,7 +171,7 @@ class Lead{
     public function inserirLead(){
         try{
             $sql = "
-                INSERT INTO lead(nome, email, telefone, regiao, unidade, data_nascimento, score, data_registro) VALUES
+                INSERT INTO leads(nome, email, telefone, regiao, unidade, data_nascimento, score, data_registro) VALUES
                 (
                     '".$this->getNome()."',
                     '".$this->getEmail()."',
@@ -182,8 +184,8 @@ class Lead{
                 );
             ";
 
-            $db->query($sql);
-            if(!$db->execute()){
+            $this->db->query($sql);
+            if(!$this->db->execute()){
                 echo "Falhou :( <br />";
             }
             else{
@@ -191,7 +193,6 @@ class Lead{
                     Se você não for redirecionado para a página inicial 
                     <a href='../index.html'> clique aqui</a>!
                 ";
-                header("refresh:2;url=../index.html");
             }
         }catch(Exception $e){
             echo "Erro de conexão com o banco: ".$e->getMessage();

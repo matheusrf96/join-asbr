@@ -18,9 +18,9 @@ CREATE SCHEMA IF NOT EXISTS `join_asbr` DEFAULT CHARACTER SET utf8 ;
 USE `join_asbr` ;
 
 -- -----------------------------------------------------
--- Table `join_asbr`.`lead`
+-- Table `join_asbr`.`leads`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `join_asbr`.`lead` (
+CREATE TABLE IF NOT EXISTS `join_asbr`.`leads` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(255) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
