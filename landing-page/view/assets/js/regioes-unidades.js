@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $.getJSON('js/regioes-unidades.json', function (data) {
+    $.getJSON('view/assets/js/regioes-unidades.json', function (data) {
         let items = [];
         let options = '<option value="" selected disabled>Selecione a região</option>';
 

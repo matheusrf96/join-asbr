@@ -52,6 +52,7 @@ class Lead{
         $this->dataNascimento = $dataNascimento;
 
         // Cálculo do Score
+        # Por região
         if($this->regiao == "Norte"){
             $this->score -= 5;
         }
@@ -66,6 +67,18 @@ class Lead{
         }
         else if($this->regiao == "Sudeste" && $this->unidade != "São Paulo"){
             $this->score -= 1;
+        }
+
+        # Por idade
+        $data1 = date_create("2018-11-01");
+        $data2 = date_create($this->dataNascimento);
+        $idade = date_diff($data1, $data2)->format('%y');
+
+        if($idade < 18 || $idade > 100){
+            $this->score -=5;
+        }
+        else if($idade >= 40 && $idade <= 99){
+            $this->score -= 3;
         }
     }
 
