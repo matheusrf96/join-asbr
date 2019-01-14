@@ -12,6 +12,7 @@ class Lead{
     private $regiao;
     private $unidade;
     private $score = 10;
+    private $token = ''; # Alterar para o token a ser utilizado
 
     public function __construct($nome, $dataNascimento, $email, $telefone, $regiao, $unidade){
         $this->db = new DB();
@@ -54,6 +55,7 @@ class Lead{
         $this->dataNascimento = $dataNascimento;
 
         // Cálculo do Score
+
         # Por região
         if($this->regiao == "Norte"){
             $this->score -= 5;
@@ -168,6 +170,10 @@ class Lead{
         return $this->score;
     }
 
+    public function getToken(){
+        return $this->token;
+    }
+
     public function inserirLead(){
         try{
             $sql = "
@@ -188,15 +194,40 @@ class Lead{
             if(!$this->db->execute()){
                 echo "Falhou :( <br />";
             }
-            else{
-                echo "<b>A operação foi realizada com sucesso!</b><br /><br />
-                    Se você não for redirecionado para a página inicial 
-                    <a href='../index.html'> clique aqui</a>!
-                ";
-            }
         }catch(Exception $e){
             echo "Erro de conexão com o banco: ".$e->getMessage();
         }
+    }
+
+    public function enviarLead(){
+        $url = 'http://api.actualsales.com.br/join-asbr/ti/lead';
+
+        $data = json_encode([
+            'nome' => $this->getNome(),
+            'email' => $this->getEmail(),
+            'telefone' => $this->getTelefone(),
+            'regiao' => $this->getRegiao(),
+            'unidade' => $this->getUnidade(),
+            'data_nascimento' => $this->getDataNascimento(),
+            'score' => $this->getScore(),
+            'token' => $this->getToken()
+        ]);
+
+        # echo $data;
+
+        $options = array(
+            'http' => array(
+              'method'  => 'POST',
+              'content' => $data,
+              'header'=>  "Content-Type: application/json\r\n" .
+                          "Accept: application/json\r\n"
+            )
+        );
+
+        $context = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+        $response = json_decode($result);
+
     }
 }
 ?>

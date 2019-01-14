@@ -15,6 +15,10 @@ if(isset($_POST)){
 
     $lead = new Lead($nome, $dataNascimento, $email, $telefone, $regiao, $unidade);
     $lead->inserirLead();
+    $lead->enviarLead();
+
+    header("refresh:2;url=../index.html");
+
 }
 
 ?>
